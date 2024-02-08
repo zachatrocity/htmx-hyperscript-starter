@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HTMX Example</title>
+  <link href="/styles.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@next/css/pico.min.css" />
+  <!-- Uncomment if you want pico colors -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@next/css/pico.colors.min.css" /> -->
+  <script src="https://unpkg.com/htmx.org"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12/dist/socket.js"></script>
+  <script type="text/hyperscript">
+    def hotsocket
+      socket HotSocket "ws://localhost:3000/reload_ws"
+        on message
+          log "here"  
+          call window.location.reload()
+      end
+    
+    on load 
+      if js window.location.href.contains("localhost")
+        call hotsocket()
+      end
+      
+    catch e
+      log "Error creating hot reload socket"
+    end
+  </script>
+</head>
+
+<body>
+  <header class="container" hx-get="/api/components/layout/header" hx-trigger="load"></header>
+  <main class="container">
+    <section id="modal">
+      <h2>Pico + htmx modals</h2>
+      <button hx-get="/api/components/modal" hx-target="body" hx-swap="beforeend">Open a Modal</button>
+    </section>
+    <section id="dashboard" hx-get="/api/components/layout/dashboard" hx-trigger="load"></section>
+  </main>
+</body>
+
+</html>

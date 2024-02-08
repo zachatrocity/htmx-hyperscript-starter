@@ -1,0 +1,49 @@
+<!-- use hyperscript within tag -->
+<!-- <script type="text/hyperscript">
+  on load for img in <img/> add .image to img
+</script> -->
+<!-- or.... -->
+
+<style>
+  .image {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    
+    img {
+      max-height: 130px;
+    }
+  }
+</style>
+
+<hgroup>
+  <h1>HTMX + Pico.css</h1>
+  <p>A fullstack golang starter using: htmx + hyperscript + hot reload + pico.css for go and html purists.</p>
+</hgroup>
+
+<!-- use hyperscript with htmx -->
+<div class="grid" _="on load for article in <article/> add .image to article">
+  <article>
+    <a href="https://htmx.org/">htmx</a>
+      <img
+        src="/assets/htmx.png"
+        alt="htmx logo"
+      />
+  </article>
+  <article>
+    <a href="https://hyperscript.org/">hyperscript</a>
+    <img src="/assets/hyperscript.png" alt="hyperscript logo">
+  </article>
+  <article>
+    <a href="https://picocss.com/docs/">Pico.css</a>
+    <img src="/assets/pico.svg" alt="pico css logo">
+  </article>
+  <article>
+    <a href="https://github.com/mitranim/gow">gow</a> for live reloading go
+    <img src="/assets/go.png" alt="go logo">
+  </article>
+  <article>
+    <a href="https://github.com/aarol/reload">aarol/reload</a> for hot reloading
+    <img src="/assets/go.png" alt="go logo">
+  </article>
+</div>

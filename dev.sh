@@ -1,0 +1,1 @@
+gow -e=go run . --dev
