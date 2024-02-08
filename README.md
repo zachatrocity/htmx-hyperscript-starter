@@ -2,6 +2,7 @@
 A full stack starter go project using [HTMX](https://htmx.org/reference/) + [Hyperscript](https://hyperscript.org/reference/) + [Pico.css](https://v2.picocss.com/docs/modal) with browser hot reloading and live reloading
 
 ## Quick Start
+Assuming you have `go` and [gow](https://github.com/mitranim/gow) installed you can simply do the following: 
 - Click 'Use this template' button above or [click here](https://github.com/new?template_name=htmx-hyperscript-starter&template_owner=zachatrocity)
 - Clone your repo
 - Run `./dev.sh`
