@@ -23,4 +23,8 @@ There are quite a hodge podge of starter templates for the HTMX stack however mo
 ## Optional Dependencies
 - Pico.css - put whatever css framework you would like in the index.html `head`
 
+## Roadmap
+- [ ] Add gin boilerplate for backend API
+- [ ] Add simple authentication flow
+
 
