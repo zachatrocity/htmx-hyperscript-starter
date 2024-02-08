@@ -6,6 +6,9 @@ A full stack starter go project using [HTMX](https://htmx.org/reference/) + [Hyp
 - Clone your repo
 - Run `./dev.sh`
 
+## Preview
+![Boilerplate](preview.png)
+
 ## Options
 - `--port`: specficy the port to run on
 
