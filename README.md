@@ -25,7 +25,8 @@ There are quite a hodge podge of starter templates for the HTMX stack however mo
 - Pico.css - put whatever css framework you would like in the index.html `head`
 
 ## Roadmap
-- [ ] Add gin boilerplate for backend API
-- [ ] Add simple authentication flow
+- ✅ Add api boilerplate for backend API
+- ⬜ Add simple authentication flow
 
-
+### Repo
+Source of truth for myself is on my [sr.ht repo](https://git.sr.ht/~zachr/htmx-hyperscript-starter) but I keep this up to date for the templating in Github
