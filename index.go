@@ -2,10 +2,13 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/aarol/reload"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -13,41 +16,49 @@ func main() {
 	port := flag.String("port", "3000", "Port to serve the app")
 	flag.Parse()
 
+	router := echo.New()
+
+	// Add Middlewares Here
+	// e.Use(middleware.Logger())
+	router.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000", "http://localhost:4000"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
+
 	// server the public folder as static
-	http.Handle("/", http.FileServer(http.Dir("public/")))
+	router.Static("/", "public/")
 
-	// add api for htmx components
-	http.Handle("/api/components/", http.StripPrefix("/api/components/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if *isDevelopment {
-			// Use the request path as needed
-			log.Println("Request path:", r.URL.Path)
-			// yeet the cache
-			w.Header().Set("Cache-Control", "no-store")
-		}
-
-		// server the static html file through the api
-		http.ServeFile(w, r, "public/components/"+r.URL.Path+".html")
-	})))
+	api := router.Group("/api")
+	{
+		// htmx components
+		api.GET("/components/*", func(c echo.Context) error {
+			if *isDevelopment {
+				fmt.Println("Component Requested: " + c.Request().URL.Path)
+			}
+			component := strings.ReplaceAll(c.Request().URL.Path, "/api/components/", "")
+			// yet the cache for dev
+			c.Response().Header().Set("Cache-Control", "no-store")
+			return c.File("public/components/" + component + ".html")
+		})
+		// all other API requests
+		// api.GET("/users/:id", func(c echo.Context) error {
+		// 	return c.String(http.StatusOK, "/users/:id")
+		// })
+	}
 
 	// hot reload from aarol/reload
-	var handler http.Handler = http.DefaultServeMux
 	if *isDevelopment {
-		// Call `New()` with a list of directories to recursively watch
-		reloader := reload.New("public/")
+		// Watch for HTML changes in the public folder to trigger browser reload
+		reload := reload.New("public/")
 
-		// Optionally, define a callback to
-		// invalidate any caches
-		// reloader.OnReload = func() {
-		// parse templates, process scss, etc
+		// reload.OnReload = func() {
+		// build templates if that's your thing
 		// }
+		router.GET("/reload_ws", echo.WrapHandler(reload.Handle(http.DefaultServeMux)))
 
-		handler = reloader.Handle(handler)
-		log.Println("Hot Reload Enabled...")
+		fmt.Println("Hot Reload Enabled...")
 	}
 
-	log.Println("Listening on port " + *port)
-	err := http.ListenAndServe(":"+*port, handler)
-	if err != nil {
-		log.Fatal(err)
-	}
+	fmt.Printf("Listening on port %s\n", *port)
+	router.Logger.Fatal(router.Start(":" + *port))
 }
