@@ -9,6 +9,8 @@ import (
 	"github.com/aarol/reload"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	user "github.com/zachatrocity/htmx-hyperscript-starter/api/routes"
 )
 
 func main() {
@@ -41,9 +43,7 @@ func main() {
 			return c.File("public/components/" + component + ".html")
 		})
 		// all other API requests
-		// api.GET("/users/:id", func(c echo.Context) error {
-		// 	return c.String(http.StatusOK, "/users/:id")
-		// })
+		api.GET("/users/:id", user.GetUser)
 	}
 
 	// hot reload from aarol/reload

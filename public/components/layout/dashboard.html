@@ -1,4 +1,45 @@
-<div>
-  <h2>Typography</h2>
-  <p>the future is static!</p>
+<style>
+  .htmx-indicator {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+
+  .htmx-request .htmx-indicator {
+    opacity: 1
+  }
+
+  #spinner_hs {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+</style>
+<div class="grid">
+  <div>
+    <h3>Find User - HTMX w/ API Example</h3>
+    <input type="id_htmx" name="id_htmx" placeholder="Enter any id" aria-label="id" required />
+    <button type="submit" hx-get="/api/users/{id_htmx}" hx-include='[name="id_htmx"]' hx-target="#currentUser" hx-swap="innerHTML"
+      hx-indicator="#spinner" hx-ext="path-params">Find</button>
+    <article class="user-card">
+      <h3>User:</h3>
+      <img id="spinner" class="htmx-indicator" src="assets/spinner.svg" />
+      <pre id="currentUser" class="user"></pre>
+    </article>
+  </div>
+  <div>
+    <h3>Find User - Hyperscript w/ API Example</h3>
+    <input type="id_hs" name="id_hs" placeholder="Enter any id" aria-label="id" required />
+    <button type="submit"
+       _="on click 
+            show #spinner_hs with *opacity
+            set id_hs to the value of <[name='id_hs']/>
+            fetch `/api/users/${id_hs}`
+            put the result into #user_hs"
+    >
+      Find</button>
+    <article class="user-card">
+      <h3>User:</h3>
+      <img id="spinner_hs" src="assets/spinner.svg" />
+      <pre id="user_hs" class="user"></pre>
+    </article>
+  </div>
 </div>
