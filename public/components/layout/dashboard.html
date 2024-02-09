@@ -17,8 +17,8 @@
   <div>
     <h3>Find User - HTMX w/ API Example</h3>
     <input type="id_htmx" name="id_htmx" placeholder="Enter any id" aria-label="id" required />
-    <button type="submit" hx-get="/api/users/{id_htmx}" hx-include='[name="id_htmx"]' hx-target="#currentUser" hx-swap="innerHTML"
-      hx-indicator="#spinner" hx-ext="path-params">Find</button>
+    <button type="submit" hx-get="/api/users/{id_htmx}" hx-include='[name="id_htmx"]' hx-target="#currentUser"
+      hx-swap="innerHTML" hx-indicator="#spinner" hx-ext="path-params">Find</button>
     <article class="user-card">
       <h3>User:</h3>
       <img id="spinner" class="htmx-indicator" src="assets/spinner.svg" />
@@ -28,13 +28,11 @@
   <div>
     <h3>Find User - Hyperscript w/ API Example</h3>
     <input type="id_hs" name="id_hs" placeholder="Enter any id" aria-label="id" required />
-    <button type="submit"
-       _="on click 
+    <button type="submit" _="on click 
             show #spinner_hs with *opacity
             set id_hs to the value of <[name='id_hs']/>
             fetch `/api/users/${id_hs}`
-            put the result into #user_hs"
-    >
+            put the result into #user_hs">
       Find</button>
     <article class="user-card">
       <h3>User:</h3>
